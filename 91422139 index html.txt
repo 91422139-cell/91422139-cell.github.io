@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>衛武營簡介</title>
+
+<style>
+    body{
+        font-family: "Microsoft JhengHei", sans-serif;
+        margin:0;
+        background:#f5f5f5;
+        color:#333;
+    }
+
+    header{
+        background:#0b6fa4;
+        color:white;
+        text-align:center;
+        padding:30px;
+    }
+
+    .container{
+        width:80%;
+        margin:auto;
+        padding:20px;
+    }
+
+    .card{
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 0 10px rgba(0,0,0,0.1);
+        margin-bottom:20px;
+    }
+
+    img{
+        width:100%;
+        border-radius:10px;
+        margin-top:15px;
+    }
+
+    h2{
+        color:#0b6fa4;
+    }
+
+    footer{
+        text-align:center;
+        padding:15px;
+        background:#222;
+        color:white;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>衛武營國家藝術文化中心</h1>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>簡介</h2>
+        <p>
+            衛武營國家藝術文化中心位於高雄市鳳山區，
+            是台灣南部最大的國家級藝文表演場館，
+            於2018年正式開幕。
+            建築設計靈感來自榕樹群，
+            外觀具有流線型與現代感，
+            被譽為亞洲重要藝術文化地標之一。
+        </p>
+
+        <img src="https://www.npac-weiwuying.org/upload/images/2021/08/6108d4cf5a9b7.jpg" alt="衛武營">
+    </div>
+
+    <div class="card">
+        <h2>特色</h2>
+        <ul>
+            <li>全球最大單一屋頂綜合劇院</li>
+            <li>擁有歌劇院、戲劇院、音樂廳與表演廳</li>
+            <li>結合藝術、音樂與休閒空間</li>
+            <li>鄰近衛武營都會公園</li>
+        </ul>
+
+        <img src="https://www.npac-weiwuying.org/upload/images/2021/08/6108d4b3ea4b4.jpg" alt="衛武營建築">
+    </div>
+
+</div>
+
+<footer>
+    © 2026 衛武營介紹網頁
+</footer>
+
+</body>
+</html>
