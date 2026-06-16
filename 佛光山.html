@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>佛光山 · 佛陀紀念館 | 高雄經典景點</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.8;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .navbar {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(15,23,42,.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex; justify-content: center; gap: 2rem;
+    padding: .75rem 1rem;
+  }
+  .navbar a {
+    font-size: .95rem; font-weight: 500; color: #94a3b8;
+    transition: color .25s; position: relative;
+  }
+  .navbar a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+    height: 2px; background: #f59e0b; transition: width .3s;
+  }
+  .navbar a:hover { color: #f59e0b; }
+  .navbar a:hover::after { width: 100%; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 20% 30%, rgba(245,158,11,.10) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 500px at 80% 70%, rgba(245,158,11,.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 800;
+    background: linear-gradient(135deg, #f59e0b, #fb923c);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; position: relative;
+  }
+  .hero p {
+    margin-top: 1rem; font-size: 1.15rem; color: #94a3b8;
+    max-width: 640px; position: relative;
+  }
+  .scroll-hint {
+    margin-top: 3rem; animation: bounce 2s infinite;
+    color: #64748b; font-size: .85rem;
+  }
+  @keyframes bounce {
+    0%,100%{ transform: translateY(0) } 50%{ transform: translateY(10px) }
+  }
+
+  .section { padding: 5rem 2rem; max-width: 1000px; margin: 0 auto; }
+  .section-title {
+    font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: .5rem;
+    background: linear-gradient(135deg, #f59e0b, #eab308);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .section-sub {
+    text-align: center; color: #64748b; margin-bottom: 2rem; font-size: 1rem;
+  }
+  .divider {
+    width: 60px; height: 3px; background: linear-gradient(90deg, #f59e0b, transparent);
+    margin: .5rem auto 1rem; border-radius: 2px;
+  }
+
+  .main-img {
+    width: 100%; max-height: 500px; object-fit: cover;
+    border-radius: 20px; margin-bottom: 3rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    display: block;
+  }
+
+  .content-card {
+    background: linear-gradient(145deg, #1e293b, #1a2332);
+    border-radius: 20px; padding: 2.5rem;
+    margin-bottom: 2rem; border: 1px solid rgba(255,255,255,.04);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+  }
+  .content-card h3 {
+    font-size: 1.4rem; font-weight: 700; color: #f59e0b;
+    margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
+  }
+  .content-card p { color: #cbd5e1; margin-bottom: 1rem; }
+  .content-card p:last-child { margin-bottom: 0; }
+
+  .info-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 1rem; margin-bottom: 2rem;
+  }
+  .info-card {
+    background: rgba(255,255,255,.03); border-radius: 12px;
+    padding: 1rem 1.2rem; border: 1px solid rgba(255,255,255,.05);
+  }
+  .info-card .label { font-size: .75rem; color: #64748b; text-transform: uppercase; letter-spacing: .5px; }
+  .info-card .value { font-size: 1rem; font-weight: 600; color: #e2e8f0; margin-top: .2rem; }
+
+  .highlight-box {
+    background: rgba(245,158,11,.06); border-left: 3px solid #f59e0b;
+    border-radius: 0 12px 12px 0; padding: 1rem 1.5rem; margin: 1.5rem 0;
+  }
+  .highlight-box p { color: #fde68a; margin-bottom: 0; }
+  .highlight-box li { color: #fde68a; }
+
+  .timeline {
+    list-style: none; padding: 0;
+  }
+  .timeline li {
+    padding: .75rem 0; border-bottom: 1px solid rgba(255,255,255,.05);
+    display: flex; gap: 1rem;
+  }
+  .timeline li:last-child { border-bottom: none; }
+  .timeline .year {
+    color: #f59e0b; font-weight: 700; white-space: nowrap; min-width: 4rem;
+  }
+
+  .back-link {
+    display: inline-block; margin-top: 2rem;
+    color: #94a3b8; font-size: .9rem;
+    transition: color .25s;
+  }
+  .back-link:hover { color: #f59e0b; }
+
+  footer {
+    text-align: center; padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+    color: #475569; font-size: .85rem;
+  }
+
+  .gallery {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    gap: 1rem; margin-top: 1.5rem;
+  }
+  .gallery img {
+    width: 100%; height: 200px; object-fit: cover;
+    border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.3);
+    transition: transform .3s;
+  }
+  .gallery img:hover { transform: scale(1.03); }
+
+  @media (max-width: 640px) {
+    .navbar { gap: 1rem; padding: .6rem .75rem; flex-wrap: wrap; }
+    .section { padding: 3rem 1.2rem; }
+    .content-card { padding: 1.5rem; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#about">關於</a>
+  <a href="#history">歷史</a>
+  <a href="#architecture">建築</a>
+  <a href="#visit">參觀資訊</a>
+  <a href="景點介紹網站.html">← 回主站</a>
+</nav>
+
+<section class="hero">
+  <h1>佛光山 · 佛陀紀念館</h1>
+  <p>南臺灣最大的佛教道場，莊嚴宏偉的心靈聖地<br>探索世界最大銅鑄坐佛與佛教藝術寶庫</p>
+  <div class="scroll-hint">↓ 向下探索</div>
+</section>
+
+<main>
+  <section class="section" id="about">
+    <h2 class="section-title">關於佛光山</h2>
+    <div class="divider"></div>
+
+    <img class="main-img" src="01.png" alt="佛光山佛陀紀念館全景">
+
+    <div class="info-grid">
+      <div class="info-card"><div class="label">地址</div><div class="value">高雄市大樹區興田路153號</div></div>
+      <div class="info-card"><div class="label">開放時間</div><div class="value">09:00–18:00 (週一休)</div></div>
+      <div class="info-card"><div class="label">門票</div><div class="value">免費參觀</div></div>
+      <div class="info-card"><div class="label">建議停留</div><div class="value">2.5 – 4 小時</div></div>
+      <div class="info-card"><div class="label">建立年份</div><div class="value">1967 年</div></div>
+      <div class="info-card"><div class="label">創辦人</div><div class="value">星雲大師</div></div>
+    </div>
+
+    <div class="content-card">
+      <h3>☸ 寺院簡介</h3>
+      <p><strong>佛光山</strong>是台灣最大的佛教寺院之一，由星雲大師於 1967 年創立，歷經五十餘年發展，已成為全球知名的佛教重鎮。全山佔地廣達百餘公頃，建築群依山而建，氣勢磅礴。</p>
+      <p>園區以「人間佛教」為核心理念，不僅是宗教修行道場，更是一座融合文化、教育、藝術與慈善的綜合性園區。每年吸引來自世界各地的信眾與遊客逾千萬人次。</p>
+      <p>佛光山在全球設有百餘個道場與佛光會分會，影響力遍及五大洲，是台灣最具國際能見度的佛教組織之一。</p>
+    </div>
+
+    <div class="content-card">
+      <h3>🏛 佛陀紀念館</h3>
+      <p><strong>佛陀紀念館</strong>位於佛光山寺旁，於 2011 年落成啟用，是一座兼具現代設計與傳統佛教藝術的宏偉建築。主體建築採用「塔剎式」風格，象徵佛教的莊嚴與神聖。</p>
+      <p>紀念館的核心是供奉<strong>佛牙舍利</strong>的玉佛殿，四周環繞四大展廳、菩提廣場、四聖塔（象徵四聖諦）、十八羅漢區、以及全長 400 公尺的禮敬大廳。每一處空間都蘊含深刻的佛教文化內涵。</p>
+      <p>館內常設展出佛教文物、書法藝術、雕刻繪畫等珍貴藏品，並不定期舉辦國際性文化藝術展覽，是亞洲最重要的佛教博物館之一。</p>
+    </div>
+  </section>
+
+  <section class="section" id="history">
+    <h2 class="section-title">歷史沿革</h2>
+    <div class="divider"></div>
+    <p class="section-sub">從荒山到佛教重鎮的傳奇歷程</p>
+
+    <div class="content-card">
+      <ul class="timeline">
+        <li><span class="year">1967</span><span>星雲大師購置高雄大樹鄉麻竹園，創建佛光山</span></li>
+        <li><span class="year">1971</span><span>大雄寶殿落成，奠定主體建築格局</span></li>
+        <li><span class="year">1976</span><span>佛光山創辦「普門中學」，推動教育事業</span></li>
+        <li><span class="year">1984</span><span>創辦南華大學，推動高等教育</span></li>
+        <li><span class="year">1992</span><span>國際佛光會成立，分支遍及全球</span></li>
+        <li><span class="year">1998</span><span>迎請佛牙舍利來台，奠定建館因緣</span></li>
+        <li><span class="year">2003</span><span>佛陀紀念館正式動工</span></li>
+        <li><span class="year">2011</span><span>佛陀紀念館落成啟用，盛大開光</span></li>
+        <li><span class="year">2014</span><span>獲評為台灣宗教百景之一</span></li>
+        <li><span class="year">2023</span><span>累計參訪人次突破 2 億</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <h2 class="section-title">建築與亮點</h2>
+    <div class="divider"></div>
+    <p class="section-sub">不可錯過的經典景觀</p>
+
+    <div class="content-card">
+      <h3>🙏 佛光大佛</h3>
+      <p>高達 <strong>48 公尺</strong>的銅鑄坐佛，是世界最大的銅鑄坐佛之一。大佛法相莊嚴慈祥，右手施無畏印、左手與願印，座落於佛陀紀念館後方高台，遠眺高屏平原與遠山，在任何角度都能感受到其宏偉氣勢。</p>
+    </div>
+
+    <div class="content-card">
+      <h3>🌳 菩提廣場</h3>
+      <p>位於佛陀紀念館前方的廣闊廣場，佔地約 1.5 公頃，地面鋪設花崗岩，可容納近萬人。廣場兩側種植菩提樹，象徵佛陀在菩提樹下悟道。每年春節平安燈法會、國際佛教論壇等重大活動皆在此舉行。</p>
+    </div>
+
+    <div class="content-card">
+      <h3>🗼 四聖塔</h3>
+      <p>菩提廣場兩側矗立四座塔樓，分別代表苦、集、滅、道四聖諦。每座塔高約 30 公尺，內部供奉四大菩薩（觀音、文殊、地藏、普賢），塔身雕刻精美，入夜後打上燈光更具莊嚴氛圍。</p>
+    </div>
+
+    <div class="content-card">
+      <h3>🏛 禮敬大廳</h3>
+      <p>長達 400 公尺的禮敬大廳是進入佛陀紀念館的主要通道，挑高 20 公尺，氣勢恢宏。大廳兩側設有佛教文物展售區、輕食區、以及多媒體互動展示，是遊客休息與認識佛教文化的最佳起點。</p>
+    </div>
+
+    <div class="highlight-box">
+      <p>🌟 <strong>園區地圖：</strong>入口 → 禮敬大廳 → 菩提廣場 → 四聖塔 → 本館（玉佛殿） → 佛光大佛 → 大佛平台（全景）</p>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <h2 class="section-title">參觀資訊</h2>
+    <div class="divider"></div>
+
+    <div class="content-card">
+      <h3>🚗 交通方式</h3>
+      <p><strong>大眾運輸：</strong>搭乘台鐵至九曲堂站，轉搭高雄客運 8010 或 8011 至佛光山站下車。亦可搭乘高鐵至左營站，轉乘義大客運 E025 直達佛光山。</p>
+      <p><strong>自行開車：</strong>國道 1 號 → 鼎金系統交流道轉國道 10 號 → 仁武交流道下 → 台 186 線 → 興田路 → 佛光山。園區設有免費停車場。</p>
+      <p><strong>YouBike：</strong>九曲堂火車站周邊設有 YouBike 站點，可騎乘自行車沿高屏溪自行車道前往（約 30 分鐘）。</p>
+    </div>
+
+    <div class="content-card">
+      <h3>📋 注意事項</h3>
+      <ul>
+        <li>進入寺院請注意服裝儀容，避免短褲與過於曝露</li>
+        <li>殿堂內禁止大聲喧嘩、飲食及拍照（部分區域開放）</li>
+        <li>週一休館（配合佛陀紀念館公休日）</li>
+        <li>建議安排半日行程，可連同斜張橋、舊鐵橋一併走訪</li>
+        <li>春節期間常舉辦平安燈法會，人潮眾多請提早出發</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h3>🍜 周邊美食</h3>
+      <p><strong>佛光山滴水坊</strong> — 提供素齋、茶點，價格親民，食材新鮮。</p>
+      <p><strong>大樹區鳳梨特產</strong> — 大樹是台灣知名鳳梨產區，周邊攤商售有鳳梨酥、鳳梨冰等伴手禮。</p>
+      <p><strong>斜張橋夜景</strong> — 夜晚的斜張橋在燈光下格外壯觀，橋畔有景觀咖啡廳，適合傍晚前往。</p>
+    </div>
+
+    <div class="content-card">
+      <h3>📅 建議行程</h3>
+      <p><strong>半日輕旅：</strong>禮敬大廳 → 佛陀紀念館本館 → 佛光大佛 → 菩提廣場 → 四聖塔</p>
+      <p><strong>一日深度：</strong>佛光山寺（大雄寶殿、大悲殿）→ 佛陀紀念館（全區）→ 斜張橋 → 舊鐵橋湿地公園</p>
+    </div>
+
+    <a class="back-link" href="景點介紹網站.html">← 回高雄經典景點主站</a>
+  </section>
+</main>
+
+<footer>
+  <p>佛光山 · 佛陀紀念館 獨立介紹網站 &copy; 2026</p>
+</footer>
+
+</body>
+</html>

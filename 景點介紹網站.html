@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高雄經典景點 | 佛光山 · 西子灣 · 岡山之眼</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.8;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── 導覽列 ─── */
+  .navbar {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(15,23,42,.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex; justify-content: center; gap: 2rem;
+    padding: .75rem 1rem;
+  }
+  .navbar a {
+    font-size: .95rem; font-weight: 500; color: #94a3b8;
+    transition: color .25s; position: relative;
+  }
+  .navbar a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+    height: 2px; background: #f59e0b; transition: width .3s;
+  }
+  .navbar a:hover { color: #f59e0b; }
+  .navbar a:hover::after { width: 100%; }
+
+  /* ─── Hero ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 20% 30%, rgba(245,158,11,.10) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 500px at 80% 70%, rgba(59,130,246,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 800;
+    background: linear-gradient(135deg, #f59e0b, #fb923c);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; position: relative;
+  }
+  .hero p {
+    margin-top: 1rem; font-size: 1.15rem; color: #94a3b8;
+    max-width: 640px; position: relative;
+  }
+  .scroll-hint {
+    margin-top: 3rem; animation: bounce 2s infinite;
+    color: #64748b; font-size: .85rem;
+  }
+  @keyframes bounce {
+    0%,100%{ transform: translateY(0) } 50%{ transform: translateY(10px) }
+  }
+
+  /* ─── 通用區塊 ─── */
+  .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-title {
+    font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: .5rem;
+    background: linear-gradient(135deg, #f59e0b, #eab308);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .section-sub {
+    text-align: center; color: #64748b; margin-bottom: 3rem; font-size: 1rem;
+  }
+  .divider {
+    width: 60px; height: 3px; background: linear-gradient(90deg, #f59e0b, transparent);
+    margin: .5rem auto 1rem; border-radius: 2px;
+  }
+
+  /* ─── 景點卡片 ─── */
+  .spot {
+    background: linear-gradient(145deg, #1e293b, #1a2332);
+    border-radius: 20px; padding: 2.5rem;
+    margin-bottom: 3rem; border: 1px solid rgba(255,255,255,.04);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .spot:last-child { margin-bottom: 0; }
+  .spot:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0,0,0,.4);
+  }
+  .spot-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .spot-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; flex-shrink: 0;
+  }
+  .spot-icon.gold   { background: rgba(245,158,11,.15); }
+  .spot-icon.blue   { background: rgba(59,130,246,.15); }
+  .spot-icon.green  { background: rgba(34,197,94,.15); }
+  .spot-icon.purple { background: rgba(168,85,247,.15); }
+  .spot-name { font-size: 1.6rem; font-weight: 700; color: #f1f5f9; }
+  .spot-tag {
+    display: inline-block; font-size: .75rem; font-weight: 600;
+    padding: .2rem .7rem; border-radius: 20px; letter-spacing: .5px;
+  }
+  .tag-gold  { background: rgba(245,158,11,.15); color: #fbbf24; }
+  .tag-blue  { background: rgba(59,130,246,.15); color: #60a5fa; }
+  .tag-green { background: rgba(34,197,94,.15);  color: #4ade80; }
+  .tag-purple { background: rgba(168,85,247,.15); color: #c084fc; }
+
+  /* ─── 資訊格柵 ─── */
+  .info-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 1rem; margin: 1.5rem 0;
+  }
+  .info-card {
+    background: rgba(255,255,255,.03); border-radius: 12px;
+    padding: 1rem 1.2rem; border: 1px solid rgba(255,255,255,.05);
+  }
+  .info-card .label { font-size: .75rem; color: #64748b; text-transform: uppercase; letter-spacing: .5px; }
+  .info-card .value { font-size: 1rem; font-weight: 600; color: #e2e8f0; margin-top: .2rem; }
+
+  .spot p { color: #cbd5e1; margin-bottom: 1rem; font-size: 1rem; }
+  .spot ul { padding-left: 1.5rem; color: #cbd5e1; margin-bottom: 1rem; }
+  .spot li { margin-bottom: .4rem; }
+  .spot li::marker { color: #f59e0b; }
+
+  /* ─── 景點圖片 ─── */
+  .spot-img {
+    width: 100%; border-radius: 14px; margin: 1.5rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    display: block; object-fit: cover;
+  }
+
+  /* highlight 區 */
+  .highlight-box {
+    background: rgba(245,158,11,.06); border-left: 3px solid #f59e0b;
+    border-radius: 0 12px 12px 0; padding: 1rem 1.5rem; margin: 1.5rem 0;
+  }
+  .highlight-box p { color: #fde68a; margin-bottom: 0; font-size: .95rem; }
+
+  /* ─── footer ─── */
+  footer {
+    text-align: center; padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+    color: #475569; font-size: .85rem;
+  }
+
+  /* ─── RWD ─── */
+  @media (max-width: 640px) {
+    .navbar { gap: 1rem; padding: .6rem .75rem; flex-wrap: wrap; }
+    .navbar a { font-size: .82rem; }
+    .section { padding: 3rem 1.2rem; }
+    .spot { padding: 1.5rem; }
+    .spot-name { font-size: 1.3rem; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#foguang">佛光山</a>
+  <a href="#xizi">西子灣</a>
+  <a href="#gangshan">岡山之眼</a>
+  <a href="#reflection">學習心得</a>
+</nav>
+
+<section class="hero">
+  <h1>高雄經典三景</h1>
+  <p>探索佛光山的莊嚴宏偉、西子灣的浪漫夕照、岡山之眼的遼闊天際<br>一趟走訪港都最具代表性的地標</p>
+  <p style="margin-top:1.5rem;font-size:.9rem;color:#64748b;">建築一甲 91422139</p>
+  <div class="scroll-hint">↓ 向下探索</div>
+</section>
+
+<main>
+  <!-- ═══════════════ 佛光山 ═══════════════ -->
+  <article class="section" id="foguang">
+    <h2 class="section-title">佛光山 · 佛陀紀念館</h2>
+    <div class="divider"></div>
+    <p class="section-sub">南臺灣最大的佛教道場，莊嚴與寧靜的心靈聖地</p>
+
+    <div class="spot">
+      <div class="spot-header">
+        <div class="spot-icon gold">☸</div>
+        <div>
+          <span class="spot-tag tag-gold">宗教聖地</span>
+          <span class="spot-tag tag-gold">文化景點</span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card"><div class="label">地址</div><div class="value">高雄市大樹區興田路153號</div></div>
+        <div class="info-card"><div class="label">開放時間</div><div class="value">09:00–18:00 (週一休)</div></div>
+        <div class="info-card"><div class="label">門票</div><div class="value">免費參觀</div></div>
+        <div class="info-card"><div class="label">建議停留</div><div class="value">2.5 – 4 小時</div></div>
+      </div>
+
+      <img class="spot-img" src="01.png" alt="佛光山佛陀紀念館與佛光大佛">
+
+      <p><strong>佛光山</strong>由星雲大師於 1967 年創建，是台灣最大的佛教寺院之一，也是全球知名的佛教重鎮。園區內最具代表性的便是<strong>佛陀紀念館</strong>，其正面矗立著一座高達 48 公尺的<strong>佛光大佛</strong>——世界最大的銅鑄坐佛之一，法相莊嚴慈祥，遠眺群山，令人心生寧靜。</p>
+
+      <p>佛陀紀念館本館採用「塔剎式」建築風格，館內供奉著佛牙舍利，並設有四大展廳、菩提廣場、八塔、以及長達 400 公尺的禮敬大廳。每年吸引數百萬海內外信眾與遊客前來朝聖。</p>
+
+      <div class="highlight-box">
+        <p>🌟 <strong>必看重點：</strong>佛光大佛（48m 銅鑄坐佛）· 菩提廣場 · 四聖塔 · 佛教地宮特展 · 大佛平台全景</p>
+      </div>
+
+      <p><strong>周邊順遊：</strong>斜張橋夜景、大樹舊鐵橋湿地公園、義大世界</p>
+
+      <p style="text-align:right;margin-bottom:0;"><a href="佛光山.html" style="color:#c084fc;font-weight:600;">完整介紹 →</a></p>
+    </div>
+  </article>
+
+  <!-- ═══════════════ 西子灣 ═══════════════ -->
+  <article class="section" id="xizi">
+    <h2 class="section-title">西子灣 · 浪漫夕照</h2>
+    <div class="divider"></div>
+    <p class="section-sub">全台最美夕陽之一，港都最浪漫的海灣</p>
+
+    <div class="spot">
+      <div class="spot-header">
+        <div class="spot-icon blue">🌊</div>
+        <div>
+          <span class="spot-tag tag-blue">自然景觀</span>
+          <span class="spot-tag tag-blue">情侶勝地</span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card"><div class="label">地址</div><div class="value">高雄市鼓山區 (中山大學旁)</div></div>
+        <div class="info-card"><div class="label">開放時間</div><div class="value">全天開放</div></div>
+        <div class="info-card"><div class="label">門票</div><div class="value">免費</div></div>
+        <div class="info-card"><div class="label">最佳時段</div><div class="value">16:00 – 18:30 (日落)</div></div>
+      </div>
+
+      <img class="spot-img" src="02.png" alt="西子灣夕照海岸風光">
+
+      <p><strong>西子灣</strong>位於高雄市鼓山區，以碧藍海水、金色沙灘與絕美夕陽聞名，是高雄最具代表性的海岸景點。每逢傍晚，落日餘暉將海面染成一片金黃，搭配遠方台灣海峽的貨輪剪影，構成一幅動人的畫卷。</p>
+
+      <p>灣畔坐落著<strong>國立中山大學</strong>，校園與自然景觀巧妙融合，沿著校內蜿蜒的小徑可抵達<strong>打狗英國領事館</strong>——這座紅磚洋樓建於 1879 年，見證了高雄的近代史，從觀景台可一覽西子灣與高雄港全景。</p>
+
+      <div class="highlight-box">
+        <p>🌅 <strong>必看重點：</strong>西子灣夕陽 · 打狗英國領事館 · 中山大學校園 · 雄鎮北門 · 柴山自然公園</p>
+      </div>
+
+      <p><strong>周邊順遊：</strong>哈瑪星鐵道文化園區、駁二藝術特區、旗津渡輪（鼓山－旗津）</p>
+
+      <p><strong>🚲 小提醒：</strong>假日人潮眾多，建議騎乘 YouBike 或搭乘捷運橘線至西子灣站，再步行或轉乘公車前往。</p>
+
+      <p style="text-align:right;margin-bottom:0;"><a href="西子灣.html" style="color:#60a5fa;font-weight:600;">完整介紹 →</a></p>
+    </div>
+  </article>
+
+  <!-- ═══════════════ 岡山之眼 ═══════════════ -->
+  <article class="section" id="gangshan">
+    <h2 class="section-title">岡山之眼 · 天空廊道</h2>
+    <div class="divider"></div>
+    <p class="section-sub">高雄最新地標，漫步雲端的震撼視野</p>
+
+    <div class="spot">
+      <div class="spot-header">
+        <div class="spot-icon green">👁</div>
+        <div>
+          <span class="spot-tag tag-green">天空步道</span>
+          <span class="spot-tag tag-green">地景建築</span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card"><div class="label">地址</div><div class="value">高雄市岡山區大莊路80巷</div></div>
+        <div class="info-card"><div class="label">開放時間</div><div class="value">09:00–17:00 (週一休)</div></div>
+        <div class="info-card"><div class="label">門票</div><div class="value">全票 100 元 / 半票 50 元</div></div>
+        <div class="info-card"><div class="label">建議停留</div><div class="value">1 – 1.5 小時</div></div>
+      </div>
+
+      <img class="spot-img" src="03.png" alt="岡山之眼天空廊道">
+
+      <p><strong>岡山之眼</strong>是高雄近年的超人氣景點，一座以「眼睛」為設計意象的天空廊道，全長 88 公尺、高約 40 公尺，聳立於小崗山上。踏上玻璃鋪面的觀景平台，腳下即是翠綠山巒，遠眺可達<strong>台灣海峽</strong>、<strong>阿公店水庫</strong>、<strong>北大武山</strong>，甚至在天氣晴朗時能一窺<strong>85 大樓</strong>與<strong>壽山</strong>的輪廓。</p>
+
+      <p>廊道採流線型設計，搭配白色的鋼構骨架與透明強化玻璃，彷彿一隻巨眼凝視著高雄的天空。園區內規劃完善，設有停車場、景觀餐廳與親子步道，適合全家大小一同出遊。</p>
+
+      <div class="highlight-box">
+        <p>🔭 <strong>必看重點：</strong>天空廊道玻璃平台 · 360° 環景視野 · 阿公店水庫全景 · 夕陽雲海 · 夜間光雕</p>
+      </div>
+
+      <p><strong>周邊順遊：</strong>阿公店森林公園、崗山老街（香辣豆瓣醬）、空軍軍官學校航空教育展示館、橋頭糖廠</p>
+
+      <p><strong>📌 小提醒：</strong>建議上午或傍晚前往光線最佳；玻璃廊道需著鞋套（現場提供）；遇雨地面濕滑請小心慢行。</p>
+
+      <p style="text-align:right;margin-bottom:0;"><a href="岡山之眼.html" style="color:#4ade80;font-weight:600;">完整介紹 →</a></p>
+    </div>
+  </article>
+
+  <!-- ═══════════════ 學習心得 ═══════════════ -->
+  <article class="section" id="reflection">
+    <h2 class="section-title">學習心得 · AI 應用探索</h2>
+    <div class="divider"></div>
+    <p class="section-sub">從工具到協作夥伴 — 三大面向的思維升級</p>
+
+    <div class="spot">
+      <div class="spot-header">
+        <div class="spot-icon purple">🧠</div>
+        <div>
+          <span class="spot-tag tag-purple">學習反思</span>
+          <span class="spot-tag tag-purple">AI 應用</span>
+        </div>
+      </div>
+
+      <p>在這段探索 AI 應用的過程中，我深刻體會到 AI 不再只是冰冷的運算工具，而是如同大腦延伸的協作夥伴。以下是我在三個核心面向的學習心得：</p>
+
+      <p><strong>1. 建立使用慣性：</strong>從「想到」到「執行」，降低摩擦力，養成「先問 AI」的習慣，讓 AI 成為工作流中不可或缺的一環。</p>
+
+      <p><strong>2. 學習使用語言：</strong>掌握「提示工程」的藝術，透過明確定義角色、設定目標、給予上下文限制，提升 AI 回覆品質，同時優化自身的邏輯表達能力。</p>
+
+      <p><strong>3. 習慣介面：</strong>與 Neural Expressive UI 共舞，善用分頁搜尋、歷史引用、模型切換，讓 AI 成為多維度的資訊儀表板。</p>
+
+      <div class="highlight-box">
+        <p>📖 <strong>完整心得：</strong>前往 <a href="學習心得.html" style="color:#c084fc;text-decoration:underline;">學習心得.html</a> 閱讀全文</p>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <p>高雄經典景點介紹網站 &copy; 2026</p>
+
+</footer>
+
+</body>
+</html>
