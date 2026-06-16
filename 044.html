@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>學習心得 | AI 應用探索</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.8;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .navbar {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(15,23,42,.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex; justify-content: center; gap: 2rem;
+    padding: .75rem 1rem;
+  }
+  .navbar a {
+    font-size: .95rem; font-weight: 500; color: #94a3b8;
+    transition: color .25s; position: relative;
+  }
+  .navbar a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+    height: 2px; background: #a855f7; transition: width .3s;
+  }
+  .navbar a:hover { color: #a855f7; }
+  .navbar a:hover::after { width: 100%; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 20% 30%, rgba(168,85,247,.10) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 500px at 80% 70%, rgba(168,85,247,.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 4rem); font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #d946ef);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; position: relative;
+  }
+  .hero .subtitle {
+    margin-top: .75rem; font-size: 1.1rem; color: #94a3b8;
+    max-width: 600px; position: relative;
+  }
+  .hero .meta {
+    margin-top: 1.5rem; font-size: .85rem; color: #64748b;
+    display: flex; gap: 1.5rem; position: relative;
+  }
+  .scroll-hint {
+    margin-top: 3rem; animation: bounce 2s infinite;
+    color: #64748b; font-size: .85rem;
+  }
+  @keyframes bounce {
+    0%,100%{ transform: translateY(0) } 50%{ transform: translateY(10px) }
+  }
+
+  .section { padding: 5rem 2rem; max-width: 800px; margin: 0 auto; }
+  .section-title {
+    font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: .5rem;
+    background: linear-gradient(135deg, #a855f7, #d946ef);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .divider {
+    width: 60px; height: 3px; background: linear-gradient(90deg, #a855f7, transparent);
+    margin: .5rem auto 3rem; border-radius: 2px;
+  }
+
+  .intro-card {
+    background: linear-gradient(145deg, #1e293b, #1a2332);
+    border-radius: 20px; padding: 2.5rem;
+    margin-bottom: 3rem; border: 1px solid rgba(255,255,255,.04);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+  }
+  .intro-card p {
+    color: #cbd5e1; font-size: 1.05rem;
+  }
+
+  .topic {
+    background: linear-gradient(145deg, #1e293b, #1a2332);
+    border-radius: 20px; padding: 2.5rem;
+    margin-bottom: 2.5rem; border: 1px solid rgba(255,255,255,.04);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .topic:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0,0,0,.4);
+  }
+  .topic-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;
+  }
+  .topic-num {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
+    background: rgba(168,85,247,.15); color: #c084fc;
+  }
+  .topic-title {
+    font-size: 1.3rem; font-weight: 700; color: #f1f5f9;
+  }
+  .topic p {
+    color: #cbd5e1; margin-bottom: .8rem;
+  }
+  .topic p:last-child { margin-bottom: 0; }
+
+  .highlight-box {
+    background: rgba(168,85,247,.06); border-left: 3px solid #a855f7;
+    border-radius: 0 12px 12px 0; padding: 1.5rem 2rem; margin: 3rem 0;
+  }
+  .highlight-box p {
+    color: #d8b4fe; font-size: 1rem; line-height: 1.9;
+    margin-bottom: 0;
+  }
+
+  .back-link {
+    display: inline-block; margin-top: 2rem;
+    color: #94a3b8; font-size: .9rem;
+    transition: color .25s;
+  }
+  .back-link:hover { color: #a855f7; }
+
+  footer {
+    text-align: center; padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+    color: #475569; font-size: .85rem;
+  }
+
+  @media (max-width: 640px) {
+    .navbar { gap: 1rem; padding: .6rem .75rem; flex-wrap: wrap; }
+    .section { padding: 3rem 1.2rem; }
+    .topic, .intro-card { padding: 1.5rem; }
+    .hero .meta { flex-direction: column; gap: .3rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#intro">前言</a>
+  <a href="#habit">使用慣性</a>
+  <a href="#prompt">提示工程</a>
+  <a href="#interface">介面習慣</a>
+  <a href="景點介紹網站.html">← 回主站</a>
+</nav>
+
+<section class="hero">
+  <h1>學習心得</h1>
+  <p class="subtitle">AI 應用探索 — 從工具到協作夥伴的思維升級</p>
+  <div class="meta">
+    <span>✍️ 學習紀錄</span>
+    <span>📌 三大核心面向</span>
+  </div>
+  <div class="scroll-hint">↓ 閱讀全文</div>
+</section>
+
+<main>
+  <section class="section">
+    <div class="intro-card" id="intro">
+      <p>在這段探索 AI 應用的過程中，我深刻體會到 AI 不再只是冰冷的運算工具，而是如同大腦延伸的協作夥伴。要讓這項技術真正成為提升生產力的助力，關鍵在於跨越技術門檻，並將其自然地融入日常流程。以下是我在三個核心面向的學習心得：</p>
+    </div>
+
+    <div class="topic" id="habit">
+      <div class="topic-header">
+        <div class="topic-num">1</div>
+        <div class="topic-title">建立使用慣性：從「想到」到「執行」</div>
+      </div>
+      <p>建立慣性的核心在於降低摩擦力。起初，我常因為慣性而選擇傳統搜尋引擎或手動處理資訊，直到我強迫自己遇到任何問題時，先在聊天視窗中輸入關鍵字，才慢慢養成「先問 AI」的習慣。當 AI 成為解決問題的第一站，無論是草擬郵件、分析數據還是快速整理資訊，這種「隨時有諮詢對象」的心理安全感，大幅縮短了作業流程的起點，讓 AI 成為工作流中不可或缺的一環。</p>
+    </div>
+
+    <div class="topic" id="prompt">
+      <div class="topic-header">
+        <div class="topic-num">2</div>
+        <div class="topic-title">學習使用語言：掌握「提示工程」的藝術</div>
+      </div>
+      <p>與 AI 對話是一門精準的溝通藝術。我發現，「精確」是學習使用語言的關鍵。透過明確定義角色（例如：請你扮演資深行銷主管）、設定任務目標、給予上下文限制，甚至是指定輸出格式，能顯著提升 AI 回覆的品質。這不僅是學習如何下指令，更是一種結構化思考訓練——因為若要讓 AI 產出高品質的結果，我必須先在腦中將問題拆解得極度條理分明。這種與 AI 溝通的過程，反向優化了我自身的邏輯表達能力。</p>
+    </div>
+
+    <div class="topic" id="interface">
+      <div class="topic-header">
+        <div class="topic-num">3</div>
+        <div class="topic-title">習慣介面：與 Neural Expressive UI 的共舞</div>
+      </div>
+      <p>介面的熟悉度決定了互動的深度。隨著 Neural Expressive UI 的進化，AI 不再只是一個單調的文字對話框。透過善用分頁搜尋、歷史紀錄引用以及根據需求即時切換模型 tier（如在速度與深度思考間切換），我學會了如何更直覺地管理複雜專案。透過動態圖表與視覺化輸出取代長篇大論，讓我能更快速地捕捉資訊核心。習慣介面後，AI 成為一個多維度的資訊儀表板，讓複雜的數據與邏輯能以最直觀的方式被解讀。</p>
+    </div>
+
+    <div class="highlight-box">
+      <p>總結來說，學習 AI 應用的過程，其實是重新學習「如何與智慧協作」的過程。透過建立慣性、磨練溝通語言，並駕馭高效的數位介面，我發現自己不再是單打獨鬥，而是站在龐大知識庫的肩膀上，能以更宏觀的視角解決問題。這不僅僅是工具的更迭，更是一場關於個人思維模式的升級。</p>
+    </div>
+
+    <a class="back-link" href="景點介紹網站.html">← 回高雄經典景點主站</a>
+  </section>
+</main>
+
+<footer>
+  <p>學習心得 — AI 應用探索 &copy; 2026</p>
+</footer>
+
+</body>
+</html>
